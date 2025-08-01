@@ -1,1 +1,4 @@
 buildroot
+boot
+boot.img
+boot.sig
