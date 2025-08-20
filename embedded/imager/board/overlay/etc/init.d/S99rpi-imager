@@ -33,6 +33,7 @@ case "$1" in
     mkdir -p /bt
     mount /dev/mmcblk0p1 /bt
     SERIAL_NUMBER=$(cat /proc/cpuinfo | awk '/Serial/{print $3; exit}')
+    wget -O /bt/meta-data http://172.28.0.3/cloud-init/meta-data?serial_number=${SERIAL_NUMBER}
     wget -O /bt/user-data http://172.28.0.3/cloud-init/user-data?serial_number=${SERIAL_NUMBER}
     umount /bt
     rm -rf /bt
