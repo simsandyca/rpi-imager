@@ -26,13 +26,14 @@ case "$1" in
     ifconfig
 
     echo Starting rpi-imager
-    PATH=/bin:/sbin:/usr/bin:/usr/sbin rpi-imager --cli http://172.28.0.3/ubuntu/ubuntu-24.04.2-preinstalled-server-arm64+raspi.img.xz /dev/mmcblk0 
+    UBUNTU_IMAGE=$(wget -q  -O -  http://172.28.0.3/ubuntu/latest)
+    PATH=/bin:/sbin:/usr/bin:/usr/sbin rpi-imager --cli http://172.28.0.3/ubuntu/${UBUNTU_IMAGE} /dev/mmcblk0 
 
     sync
     mkdir -p /bt
     mount /dev/mmcblk0p1 /bt
     SERIAL_NUMBER=$(cat /proc/cpuinfo | awk '/Serial/{print $3; exit}')
-    wget -O /bt/user-data http://172.28.0.3/cloud-init/user-data?serial_number=$SERIAL_NUMBER
+    wget -O /bt/user-data http://172.28.0.3/cloud-init/user-data?serial_number=${SERIAL_NUMBER}
     umount /bt
     rm -rf /bt
     sync

@@ -13,7 +13,7 @@ then
 fi
 if [[ ! -f boot.img ]]
 then
-   dd if=/dev/zero of=boot.img bs=1M count=32
+   dd if=/dev/zero of=boot.img bs=1M count=36
    losetup -P $LOOP boot.img
    mkfs.vfat $LOOP
 else 
